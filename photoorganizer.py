@@ -111,11 +111,8 @@ def process(input_file_path, output_directory_path, seen_file_hashes):
         file_hash = input_file_path
 
     # Make the directory from the timestamp.
-    # (Un)comment the below lines to switch between weekly, monthly and yearly output.
     timestamp_week = math.floor(timestamp.day / 7) + 1
     timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2), "Week " + str(timestamp_week).zfill(2))
-    timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2))
-    timestamp_directory = os.path.join(output_directory_path, str(timestamp.year))
 
     # Check for duplicates.
     if file_hash in seen_file_hashes:
