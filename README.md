@@ -11,7 +11,7 @@ Process a folder containing photos and vidoes and copies them into a new directo
 While processing the photos, it detects duplicates and marks them as such. The first file found is the original, any subsequent copies are marked as duplicates.
 
 ## How do you run it?
-Firstly download the application from [Releases](https://github.com/dipeshc/photo-organizer/releases) onto your computer.
+Firstly download the application from [Releases](https://github.com/dipeshc/photo-organizer/releases) onto your computer. There are 3 types; weekly, monthly and yearly. Each will organize to that level of precision.
 
 If your running on Windows, drag a folder onto the application. The application will create a new folder adjacent the one that was just dragged ontop but suffixed with "-organized". This folder will contain the organized files.
 
@@ -38,3 +38,6 @@ python -m venv env
 pip install -r requirements.txt
 pyinstaller --onefile photoorganizer.py
 ```
+
+## Notes
+* The weekly, monthly and yearly precision is determined by the file name of the application/executable. If the name is changed to not include anything, then weekly is used by default.
