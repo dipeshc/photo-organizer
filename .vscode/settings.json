@@ -1,0 +1,8 @@
+{
+    "python.formatting.autopep8Args": [
+        "--max-line-length=200"
+    ],
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "lintOnSave": true
+}
