@@ -38,6 +38,15 @@ def main():
     logging.debug("Arguments %s.", sys.argv)
 
     # Parse the arguments.
+    mode = None
+    file_name_lower = sys.argv[0].lower()
+    if "monthly" in file_name_lower:
+        mode = "monthly"
+    elif "yearly" in file_name_lower:
+        mode = "yearly"
+    else:
+        mode = "weekly"
+
     input_directory = None
     if len(sys.argv) == 1:
         print("Drag the photos folder here and press Enter/Return.")
@@ -67,11 +76,11 @@ def main():
         for file_name in file_list:
             input_file_path = os.path.join(dir_name, file_name)
             logging.info("Processing file: %s" % input_file_path)
-            output_file_path = process(input_file_path, output_directory, seen_image_hashes)
+            output_file_path = process(input_file_path, output_directory, mode, seen_image_hashes)
             copy(input_file_path, output_file_path)
 
 
-def process(input_file_path, output_directory_path, seen_file_hashes):
+def process(input_file_path, output_directory_path, mode, seen_file_hashes):
     '''
     Procesess the the input file path and returns where to output it
     '''
@@ -111,8 +120,14 @@ def process(input_file_path, output_directory_path, seen_file_hashes):
         file_hash = input_file_path
 
     # Make the directory from the timestamp.
-    timestamp_week = math.floor(timestamp.day / 7) + 1
-    timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2), "Week " + str(timestamp_week).zfill(2))
+    timestamp_directory = None
+    if mode == "yearly":
+        timestamp_directory = os.path.join(output_directory_path, str(timestamp.year))
+    elif mode == "monthly":
+        timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2))
+    else:
+        timestamp_week = math.floor(timestamp.day / 7) + 1
+        timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2), "Week " + str(timestamp_week).zfill(2))
 
     # Check for duplicates.
     if file_hash in seen_file_hashes:

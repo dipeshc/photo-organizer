@@ -11,6 +11,10 @@ jobs:
             alias: mac
           - value: ubuntu-latest
             alias: ubuntu
+        precision:
+          - weekly
+          - monthly
+          - yearly
     runs-on: ${{ matrix.os.value }}
     steps:
     - uses: actions/checkout@v2
@@ -28,13 +32,13 @@ jobs:
         flake8 photoorganizer.py --count --select=E9,F63,F7,F82 --show-source --statistics
     - name: Create Application
       run: |
-        pyinstaller --onefile --name photo-organizer-${{ matrix.os.alias }} photoorganizer.py
+        pyinstaller --onefile --name photo-organizer-${{ matrix.precision }}-${{ matrix.os.alias }} photoorganizer.py
     - name: Publish Release
       uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1.0.${{ github.run_number }}
+        tag_name: v1.1.${{ github.run_number }}
         files: dist/photo-organizer-*
         body: Commit ${{ github.sha }} from branch ${{ github.ref }}.
         draft: true
