@@ -3,6 +3,7 @@ on: push
 jobs:
   build:
     strategy:
+      max-parallel: 1
       matrix:
         os:
           - value: windows-latest
@@ -41,4 +42,5 @@ jobs:
         tag_name: v1.1.${{ github.run_number }}
         files: dist/photo-organizer-*
         body: Commit ${{ github.sha }} from branch ${{ github.ref }}.
+        prerelease: ${{ github.ref != 'refs/heads/master' }}
         draft: true
