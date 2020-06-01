@@ -3,6 +3,7 @@ on: push
 jobs:
   build:
     strategy:
+      max-parallel: 1
       matrix:
         os:
           - value: windows-latest
