@@ -167,7 +167,17 @@ def get_last_modified_datetime(file_path):
 def copy(source, destination):
     destination_directory = os.path.dirname(destination)
     os.makedirs(destination_directory, exist_ok=True)
-    shutil.copy2(source, destination)
+
+    final_destination = destination
+    index = 0
+    while os.path.exists(final_destination):
+        index += 1
+        base_name = os.path.basename(destination)
+        file_name, ext = os.path.splitext(base_name)
+        final_destination = os.path.join(destination_directory, file_name + "-" + "{:04}".format(index) + ext)
+
+    logging.debug("Copying %s to %s." % (source, final_destination))
+    shutil.copy2(source, final_destination)
 
 
 if __name__ == "__main__":
