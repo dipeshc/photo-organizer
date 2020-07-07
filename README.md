@@ -26,7 +26,7 @@ Be sure to alread have Python 3.3 or greater installed.
 #### Mac and Linux
 ```bash
 python3 -m venv env
-source .\env\bin\activate
+source ./env/bin/activate
 pip install -r requirements.txt
 pyinstaller --onefile photoorganizer.py
 ```
