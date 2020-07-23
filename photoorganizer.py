@@ -6,7 +6,6 @@ import imagehash
 import math
 import logging
 import os
-import PIL
 import shutil
 import sys
 import time
@@ -38,8 +37,9 @@ def main():
     logging.debug("Arguments %s.", sys.argv)
 
     # Parse the arguments.
-    mode = None
     file_name_lower = sys.argv[0].lower()
+    do_move = "move" in file_name_lower
+    mode = None
     if "monthly" in file_name_lower:
         mode = "monthly"
     elif "yearly" in file_name_lower:
@@ -54,7 +54,8 @@ def main():
     elif len(sys.argv) == 2:
         input_directory = sys.argv[1]
     elif len(sys.argv) > 2:
-        raise ValueError("Exactly 1 argument for the input directory must be procided, instead got %d" % (len(sys.argv)-1))
+        raise ValueError("Exactly 1 argument for the input directory must be procided, instead got %d"
+                         % (len(sys.argv)-1))
 
     # Check if input_directory is a directory.
     if not os.path.isdir(input_directory):
@@ -77,7 +78,7 @@ def main():
             input_file_path = os.path.join(dir_name, file_name)
             logging.info("Processing file: %s" % input_file_path)
             output_file_path = process(input_file_path, output_directory, mode, seen_image_hashes)
-            copy(input_file_path, output_file_path)
+            copy_or_move(input_file_path, output_file_path, do_move)
 
 
 def process(input_file_path, output_directory_path, mode, seen_file_hashes):
@@ -127,7 +128,8 @@ def process(input_file_path, output_directory_path, mode, seen_file_hashes):
         timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2))
     else:
         timestamp_week = math.floor(timestamp.day / 7) + 1
-        timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2), "Week " + str(timestamp_week).zfill(2))
+        timestamp_directory = os.path.join(output_directory_path, str(timestamp.year), str(timestamp.month).zfill(2),
+                                           "Week " + str(timestamp_week).zfill(2))
 
     # Check for duplicates.
     if file_hash in seen_file_hashes:
@@ -154,7 +156,7 @@ def get_taken_datetime(image):
         if metadata is not None:
             taken_datetime_string = metadata[36867]
             return datetime.datetime.strptime(taken_datetime_string, "%Y:%m:%d %H:%M:%S")
-    except:
+    except Exception:
         pass
     return None
 
@@ -164,7 +166,7 @@ def get_last_modified_datetime(file_path):
     return datetime.datetime.utcfromtimestamp(modified_time_epoch)
 
 
-def copy(source, destination):
+def copy_or_move(source, destination, do_move):
     destination_directory = os.path.dirname(destination)
     os.makedirs(destination_directory, exist_ok=True)
 
@@ -176,8 +178,12 @@ def copy(source, destination):
         file_name, ext = os.path.splitext(base_name)
         final_destination = os.path.join(destination_directory, file_name + "-" + "{:04}".format(index) + ext)
 
-    logging.debug("Copying %s to %s." % (source, final_destination))
-    shutil.copy2(source, final_destination)
+    if do_move:
+        logging.debug("Moving %s to %s." % (source, final_destination))
+        shutil.move(source, final_destination)
+    else:
+        logging.debug("Copying %s to %s." % (source, final_destination))
+        shutil.copy2(source, final_destination)
 
 
 if __name__ == "__main__":

@@ -21,13 +21,13 @@ If your on Mac, double click the application, drag the folder onto the terminal 
 The below steps will create an executable application. Whichever platform (i.e. Windows, Mac, or Linux) is used, is the only place the application will run.
 
 
-Be sure to alread have Python 3.3 or greater installed.
+Be sure to alread have Python 3.8 or greater installed.
 
 #### Mac and Linux
 ```bash
 python3 -m venv env
 source ./env/bin/activate
-pip install -r requirements.txt
+pip install -e .[dev]
 pyinstaller --onefile photoorganizer.py
 ```
 
@@ -35,7 +35,7 @@ pyinstaller --onefile photoorganizer.py
 ```pwsh
 python -m venv env
 .\env\Scripts\Activate.ps1
-pip install -r requirements.txt
+pip install -e .[dev]
 pyinstaller --onefile photoorganizer.py
 ```
 
