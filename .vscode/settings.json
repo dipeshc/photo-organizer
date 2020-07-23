@@ -4,5 +4,6 @@
     ],
     "editor.formatOnSave": true,
     "python.linting.enabled": true,
-    "lintOnSave": true
+    "lintOnSave": true,
+    "python.pythonPath": "/Users/dchauhan/Desktop/photo-organizer/venv/bin/python3.8"
 }
