@@ -10,7 +10,7 @@ setuptools.setup(
         "ImageHash==4.1.0",
         "macholib==1.14",
         "numpy==1.18.4",
-        "Pillow==7.1.2",
+        "Pillow==8.1.1",
         "PyInstaller==3.6",
         "PyWavelets==1.1.1",
         "scipy==1.4.1",
