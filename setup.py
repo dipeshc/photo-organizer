@@ -9,7 +9,7 @@ setuptools.setup(
         "altgraph==0.17",
         "ImageHash==4.1.0",
         "macholib==1.14",
-        "numpy==1.18.4",
+        "numpy==1.21.0",
         "Pillow==9.0.1",
         "PyInstaller==3.6",
         "PyWavelets==1.1.1",
