@@ -13,7 +13,7 @@ setuptools.setup(
         "Pillow==9.0.1",
         "PyInstaller==3.6",
         "PyWavelets==1.1.1",
-        "scipy==1.4.1",
+        "scipy==1.10.0",
         "six==1.15.0"
     ],
     extras_require={
