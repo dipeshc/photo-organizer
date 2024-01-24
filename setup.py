@@ -11,7 +11,7 @@ setuptools.setup(
         "macholib==1.14",
         "numpy==1.22.0",
         "Pillow==9.0.1",
-        "PyInstaller==3.6",
+        "PyInstaller==5.13.1",
         "PyWavelets==1.1.1",
         "scipy==1.4.1",
         "six==1.15.0"
